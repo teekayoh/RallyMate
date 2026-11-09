@@ -1,0 +1,10 @@
+{
+  "name": "rallymate",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mobile-first tennis partner matching MVP for Birmingham.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs"
+  }
+}

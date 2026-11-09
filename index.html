@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RallyMate</title>
+    <meta
+      name="description"
+      content="Find nearby tennis players in Birmingham and arrange a match."
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#requests" aria-label="RallyMate home">
+          <span class="brand-mark" aria-hidden="true">R</span>
+          <span>
+            <strong>RallyMate</strong>
+            <small>Birmingham tennis matches</small>
+          </span>
+        </a>
+
+        <nav class="nav-tabs" aria-label="Primary navigation">
+          <button class="nav-tab is-active" data-view-target="requests" type="button">
+            Requests
+          </button>
+          <button class="nav-tab" data-view-target="create" type="button">
+            Create
+          </button>
+          <button class="nav-tab" data-view-target="matches" type="button">
+            Matches
+          </button>
+          <button class="nav-tab" data-view-target="profile" type="button">
+            Profile
+          </button>
+        </nav>
+      </header>
+
+      <main>
+        <section class="workspace">
+          <aside class="side-panel" aria-labelledby="today-label">
+            <div>
+              <p class="eyebrow" id="today-label">Today</p>
+              <h1>Find a player nearby.</h1>
+              <p>
+                Post when and where you want to play, then accept a local player
+                when someone is interested.
+              </p>
+            </div>
+
+            <div class="profile-card">
+              <div class="avatar" id="activeAvatar" aria-hidden="true">AM</div>
+              <div>
+                <p class="profile-name" id="activeName">Amina Malik</p>
+                <p class="muted" id="activeMeta">Intermediate - Edgbaston</p>
+              </div>
+            </div>
+
+            <dl class="stat-grid">
+              <div>
+                <dt id="openCount">0</dt>
+                <dd>Open requests</dd>
+              </div>
+              <div>
+                <dt id="matchCount">0</dt>
+                <dd>Matches</dd>
+              </div>
+            </dl>
+          </aside>
+
+          <section class="main-panel" aria-live="polite">
+            <section class="view is-active" id="requests-view" data-view="requests">
+              <div class="view-header">
+                <div>
+                  <p class="eyebrow">Open play requests</p>
+                  <h2>Nearby players</h2>
+                </div>
+                <button class="primary-button" data-view-target="create" type="button">
+                  New request
+                </button>
+              </div>
+
+              <div class="filter-bar" aria-label="Request filters">
+                <label>
+                  <span>Area</span>
+                  <input id="areaFilter" type="search" placeholder="Any area">
+                </label>
+                <label>
+                  <span>Level</span>
+                  <select id="levelFilter">
+                    <option value="">Any level</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="improver">Improver</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="request-list" id="requestList"></div>
+            </section>
+
+            <section class="view" id="create-view" data-view="create">
+              <div class="view-header">
+                <div>
+                  <p class="eyebrow">Create request</p>
+                  <h2>Say when you want to play</h2>
+                </div>
+              </div>
+
+              <form class="form-grid" id="requestForm">
+                <label>
+                  <span>Area or postcode</span>
+                  <input name="area" required placeholder="Moseley or B13">
+                </label>
+                <label>
+                  <span>Date</span>
+                  <input name="date" required type="date">
+                </label>
+                <label>
+                  <span>Time window</span>
+                  <input name="time" required placeholder="18:00 to 20:00">
+                </label>
+                <label>
+                  <span>Skill level wanted</span>
+                  <select name="level" required>
+                    <option value="beginner">Beginner</option>
+                    <option value="improver">Improver</option>
+                    <option value="intermediate" selected>Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                  </select>
+                </label>
+                <fieldset class="segmented-field">
+                  <legend>Format</legend>
+                  <label>
+                    <input type="radio" name="format" value="Singles" checked>
+                    <span>Singles</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="format" value="Doubles">
+                    <span>Doubles</span>
+                  </label>
+                </fieldset>
+                <label class="full-span">
+                  <span>Note</span>
+                  <textarea
+                    name="note"
+                    rows="4"
+                    placeholder="I can bring balls and I am happy to play a friendly set."
+                  ></textarea>
+                </label>
+                <div class="form-actions full-span">
+                  <button class="secondary-button" data-view-target="requests" type="button">
+                    Cancel
+                  </button>
+                  <button class="primary-button" type="submit">Post request</button>
+                </div>
+              </form>
+            </section>
+
+            <section class="view" id="matches-view" data-view="matches">
+              <div class="view-header">
+                <div>
+                  <p class="eyebrow">Accepted requests</p>
+                  <h2>Your matches</h2>
+                </div>
+              </div>
+              <div class="match-list" id="matchList"></div>
+            </section>
+
+            <section class="view" id="profile-view" data-view="profile">
+              <div class="view-header">
+                <div>
+                  <p class="eyebrow">Profile</p>
+                  <h2>Your player details</h2>
+                </div>
+                <div class="profile-toolbar">
+                  <span class="mode-pill" id="backendStatus">Demo mode</span>
+                  <button
+                    class="secondary-button is-hidden"
+                    id="signOutButton"
+                    type="button"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              </div>
+
+              <div class="auth-grid is-hidden" id="authPanel">
+                <form class="auth-card" id="signInForm">
+                  <p class="eyebrow">Sign in</p>
+                  <label>
+                    <span>Email</span>
+                    <input name="email" required type="email" autocomplete="email">
+                  </label>
+                  <label>
+                    <span>Password</span>
+                    <input
+                      name="password"
+                      required
+                      type="password"
+                      autocomplete="current-password"
+                    >
+                  </label>
+                  <button class="primary-button" type="submit">Sign in</button>
+                </form>
+
+                <form class="auth-card" id="signUpForm">
+                  <p class="eyebrow">Create account</p>
+                  <label>
+                    <span>Display name</span>
+                    <input name="name" required autocomplete="name">
+                  </label>
+                  <label>
+                    <span>Email</span>
+                    <input name="email" required type="email" autocomplete="email">
+                  </label>
+                  <label>
+                    <span>Password</span>
+                    <input
+                      name="password"
+                      required
+                      minlength="6"
+                      type="password"
+                      autocomplete="new-password"
+                    >
+                  </label>
+                  <label>
+                    <span>Skill level</span>
+                    <select name="level" required>
+                      <option value="beginner">Beginner</option>
+                      <option value="improver">Improver</option>
+                      <option value="intermediate">Intermediate</option>
+                      <option value="advanced">Advanced</option>
+                    </select>
+                  </label>
+                  <label>
+                    <span>Preferred area or postcode</span>
+                    <input name="area" required placeholder="Birmingham">
+                  </label>
+                  <button class="primary-button" type="submit">Create account</button>
+                </form>
+              </div>
+
+              <div id="profileEditor">
+                <form class="form-grid" id="profileForm">
+                  <label>
+                    <span>Display name</span>
+                    <input name="name" required>
+                  </label>
+                  <label>
+                    <span>Skill level</span>
+                    <select name="level" required>
+                      <option value="beginner">Beginner</option>
+                      <option value="improver">Improver</option>
+                      <option value="intermediate">Intermediate</option>
+                      <option value="advanced">Advanced</option>
+                    </select>
+                  </label>
+                  <label>
+                    <span>Preferred area or postcode</span>
+                    <input name="area" required>
+                  </label>
+                  <label class="full-span">
+                    <span>Short bio</span>
+                    <textarea name="bio" rows="4"></textarea>
+                  </label>
+                  <div class="form-actions full-span">
+                    <button class="primary-button" type="submit">Save profile</button>
+                  </div>
+                </form>
+              </div>
+            </section>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

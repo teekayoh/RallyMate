@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "RallyMate",
+    "slug": "rallymate",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "rallymate",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rallymate.app"
+    },
+    "android": {
+      "package": "com.rallymate.app"
+    },
+    "extra": {
+      "supabaseUrl": "",
+      "supabaseAnonKey": ""
+    }
+  }
+}
